@@ -9,6 +9,7 @@ return require('packer').startup(function(use)
 
 
     use 'tmsvg/pear-tree'
+    use 'feline-nvim/feline.nvim'
     use 'lervag/vimtex'
 
     -- Treesitter
