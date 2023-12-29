@@ -1,8 +1,9 @@
+--  Anything starting with l is meant to be used with latex
 vim.cmd([[
-nnoremap <Leader>f yyplceend<Esc>
-nnoremap <Leader>b a\textbf{<Esc>l
-nnoremap <Leader>es a\(\)<Esc>h
-nnoremap <Leader>el a\[\]<Esc>hi<Enter><Enter><Esc>k
+nnoremap <Leader>lf yyplceend<Esc>
+nnoremap <Leader>lb a\textbf{<Esc>l
+nnoremap <Leader>les a\(\)<Esc>h
+nnoremap <Leader>lel a\[\]<Esc>hi<Enter><Enter><Esc>k
 
 nnoremap <Leader>p "+p
 nnoremap <Leader>P "+P

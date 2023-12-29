@@ -15,11 +15,6 @@ return require('packer').startup(function(use)
     use 'vim-airline/vim-airline'
     use 'vim-airline/vim-airline-themes'
 
-    -- Telescope
-    use {
-        'nvim-telescope/telescope.nvim',
-        requires = { {'nvim-lua/plenary.nvim'}}
-    }
 
     -- Treesitter
     use {
