@@ -2,8 +2,8 @@
 vim.cmd([[
 nnoremap <Leader>lf yyplceend<Esc>
 nnoremap <Leader>lb a\textbf{<Esc>l
-nnoremap <Leader>les a\(\)<Esc>h
-nnoremap <Leader>lel a\[\]<Esc>hi<Enter><Enter><Esc>k
+nnoremap <Leader>lds a\(\)<Esc>h
+nnoremap <Leader>ldl a\[\]<Esc>hi<Enter><Enter><Esc>k
 
 nnoremap <Leader>p "+p
 nnoremap <Leader>P "+P
