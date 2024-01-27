@@ -1,9 +1,9 @@
---  Anything starting with l is meant to be used with latex
 vim.cmd([[
+" Latex keybindings
 nnoremap <Leader>lf yyplceend<Esc>
-nnoremap <Leader>lb a\textbf{<Esc>l
-nnoremap <Leader>lds a\(\)<Esc>h
-nnoremap <Leader>ldl a\[\]<Esc>hi<Enter><Enter><Esc>k
+nnoremap <Leader>lb a\textbf{}<Esc>i
+nnoremap <Leader>es a\(\)<Esc>h
+nnoremap <Leader>el a\[\]<Esc>hi<Enter><Enter><Esc>k
 
 nnoremap <Leader>p "+p
 nnoremap <Leader>P "+P
