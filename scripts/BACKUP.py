@@ -35,7 +35,6 @@ def mount_check():
         print("[*] Media not mounted")
         print(f"[*] Mounting {media} to {backup_path}")
 
-        # os.system(f"sudo mount -t cifs -o username=v01d,password='Ar8822977@trueNAS' //192.168.100.59/DataHaven {SMB_backup_path}")
         try:
             os.system(f"sudo mount {media} {backup_path}")
             return True
