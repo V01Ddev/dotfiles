@@ -4,6 +4,11 @@
 #include <unistd.h>
 
 
+// Check privileges of the user running the script
+void CheckPriv()
+{
+}
+
 char* CombS(char *s1, char *s2)
 {
     int TotalSize = strlen(s1)+strlen(s2)+1;
