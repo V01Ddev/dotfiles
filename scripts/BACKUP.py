@@ -2,9 +2,6 @@
 import os
 
 
-# backup_path = "~/SmbServer/"
-# media = "192.168.100.59"
-
 # dir that media is mounted to 
 backup_path = "/mnt/"
 
@@ -19,12 +16,13 @@ def get_media():
 
 
 
+## Checks if media is mounted by accessing .checkfile
 def mount_check():
 
     mbp = backup_path[2:]
     print(mbp)
 
-    response = os.path.exists(f"/home/v01d/{mbp}BACKUP/checkfile.txt")
+    response = os.path.exists(f"/home/v01d/{mbp}BACKUP/.checkfile")
     print(f"mount check res --> {response}")
 
     if response:
@@ -44,6 +42,8 @@ def mount_check():
             return False
 
 
+
+## Checks if media exists 
 def media_check():
 
     if os.path.exists(media):
@@ -69,10 +69,7 @@ def main(media):
 
         for path in paths:
             dir_name = path[2:]
-            os.system(f"sudo rsync -rP --delete {path} {backup_path}/BACKUP/ ")
-
-        # os.system(f"sudo umount {backup_path}")
-
+            os.system(f"rsync -rP --delete {path} {backup_path}/BACKUP/ ")
 
     else:
         print("[*] ERROR!")
