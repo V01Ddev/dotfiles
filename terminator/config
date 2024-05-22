@@ -1,15 +1,14 @@
 [global_config]
   suppress_multiple_term_dialog = True
-[keybindings]
 [profiles]
   [[default]]
-    background_color = "#223344"
+    background_color = "#282c34"
     background_darkness = 1.0
     background_type = transparent
     font = Source Code Pro 17
-    foreground_color = "#eeeeec"
+    foreground_color = "#b9c0cb"
     scrollback_infinite = True
-    palette = "#073642:#dc322f:#859900:#b58900:#64aee3:#d33682:#2aa198:#d3d7cf:#1e2d3c:#cb4b16:#555753:#657b83:#839496:#6c71c4:#93a1a1:#d3d7cf"
+    palette = "#41444d:#fc2f52:#25a45c:#ff936a:#3584e4:#7a82da:#4483aa:#cdd4e0:#8f9aae:#ff6480:#3fc56b:#f9c859:#10b1fe:#ff78f8:#5fb9bc:#ffffff"
     use_system_font = False
     copy_on_selection = True
     title_font = Sans 16
@@ -22,4 +21,3 @@
       type = Terminal
       parent = window0
       profile = default
-[plugins]
