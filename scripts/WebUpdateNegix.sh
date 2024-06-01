@@ -1,20 +1,21 @@
 #!/bin/bash 
 
+# HTTP URL to github directory
+GITURL = 
+
+# The directory name after the clone
+DIRNAME = 
 
 echo [*] clearing old files...
-
-rm -r /www/html/*
-
-rm -r v01d-website
+rm -r /var/www/html/$DIRNAME
+rm -r $DIRNAME
 
 
 echo [*] cloning repo...
-
-git clone https://github.com/V01Ddev/v01d-website.git
-
+git clone $GITURL
 
 echo [*] moving items...
-mv ~/v01d-website/* /var/www/html
+mv ~/$DIRNAME /var/www/html/
 
 
 echo [*] restarting nginx 
