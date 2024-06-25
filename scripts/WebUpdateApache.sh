@@ -1,24 +1,24 @@
 #!/bin/bash 
 
 
+# HTTP URL to github repo
+GITURL = 
+
+# The directory name after the clone
+DIRNAME = 
+
 echo [*] clearing old files...
-systemctl start apache2
-
-
-echo [*] clearing old files...
-rm -r /www/html/*
-
-rm -r /Avocade-Web-1
+rm -r /var/www/html/*
+rm -r $DIRNAME
 
 
 echo [*] cloning repo...
-git clone https://github.com/Hacker8543/Avocado-Web-1.git
+git $GITURL
 
 
 echo [*] moving items...
-mv ~/Avocade-Web-1/* /var/www/html
+mv ~/$DIRNAME/* /var/www/html/
 
-
-echo [*] restarting nginx 
+echo [*] restarting apache2
 systemctl restart apache2
 
