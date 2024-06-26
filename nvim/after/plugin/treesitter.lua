@@ -5,8 +5,8 @@ require'nvim-treesitter.configs'.setup {
         "c",
         "cpp",
         "bash",
-        "latex",
-        "php"},
+        "html",
+        'css',},
 
     -- Automatically install missing parsers when entering buffer
     -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
@@ -17,6 +17,10 @@ require'nvim-treesitter.configs'.setup {
         enable = true,
         additional_vim_regex_highlighting = false,
     }, 
+
     -- enable indentation
     indent = { enable = true },
+
+    -- making PHP use HTML
+    vim.treesitter.language.register('html', 'php')
 }
