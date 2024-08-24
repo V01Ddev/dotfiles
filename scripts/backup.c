@@ -87,7 +87,7 @@ int main()
         exit(1);
     }
 
-    char cmd_1[] = "rsync -rD --delete ";
+    char cmd_1[] = "rsync -rtU --delete ";
     for (int i=0; i < (sizeof(paths)/20)-1; i++){
         char *cmd_2[90];
         char *full_cmd[59];
@@ -95,7 +95,9 @@ int main()
 
         *full_cmd = CombS(*cmd_2, " /mnt/backup_point");
 
+        printf("[*] Running %s\n", *full_cmd);
         system(*full_cmd);
+        printf("[*] Finished backing up %s\n", paths[i]);
     }
     char *u_cmd = CombS("umount ", MediaPath);
     system(u_cmd);
