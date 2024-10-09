@@ -3,6 +3,8 @@ require("mason-lspconfig").setup({
     ensure_installed = {
         "pylsp",
         "clangd",
+        "phpactor",
+        "eslint-lsp",
         "ltex",
     }
 })
