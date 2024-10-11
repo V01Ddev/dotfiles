@@ -4,7 +4,7 @@ require("mason-lspconfig").setup({
         "pylsp",
         "clangd",
         "phpactor",
-        "eslint-lsp",
+        "eslint",
         "ltex",
     }
 })
