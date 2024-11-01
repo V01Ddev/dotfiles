@@ -9,3 +9,7 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 
 vim.opt.spell = true
+
+vim.cmd([[
+colorscheme sorbet
+]])
