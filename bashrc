@@ -16,7 +16,7 @@ ssh-add ~/.ssh/git > /dev/null 2>&1
 # Adding $HOME/bin/ to PATH
 export PATH="$HOME/bin:$PATH"
 
-# Running tmux
-if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ] && [ -z "${TMUX}" ]; then
-    exec tmux new-session -A -s ${USER} >/dev/null 2>&1
+# Starting tmux
+if command -v tmux > /dev/null 2>&1; then
+  [ -z "$TMUX" ] && exec tmux
 fi
