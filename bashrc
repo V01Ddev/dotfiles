@@ -16,6 +16,9 @@ ssh-add ~/.ssh/git > /dev/null 2>&1
 # Adding $HOME/bin/ to PATH
 export PATH="$HOME/bin:$PATH"
 
+# Making man open pages in nvim
+export MANPAGER='nvim +Man!'
+
 # Starting tmux
 if command -v tmux > /dev/null 2>&1; then
   [ -z "$TMUX" ] && exec tmux
