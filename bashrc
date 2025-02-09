@@ -20,6 +20,6 @@ export PATH="$HOME/bin:$PATH"
 export MANPAGER='nvim +Man!'
 
 # Starting tmux
-if command -v tmux > /dev/null 2>&1; then
-  [ -z "$TMUX" ] && exec tmux
-fi
+#if command -v tmux > /dev/null 2>&1; then
+#  [ -z "$TMUX" ] && exec tmux
+#fi
