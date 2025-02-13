@@ -12,8 +12,8 @@ return require('packer').startup(function(use)
     use 'lervag/vimtex'
 
     -- Status bar
-    use 'vim-airline/vim-airline'
-    use 'vim-airline/vim-airline-themes'
+    -- use 'vim-airline/vim-airline'
+    -- use 'vim-airline/vim-airline-themes'
 
     -- Telescope
     use {
