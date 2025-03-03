@@ -1,13 +1,16 @@
 #!/bin/bash 
 
 # HTTP URL to github directory
-GITURL = 
+GITURL=''
 
 # The directory name after the clone
-DIRNAME = 
+DIRNAME=''
+
+# The directory that nginx references
+WDIR='/var/www/html/' # Default on Debian
 
 echo [*] clearing old files...
-rm -r /var/www/html/$DIRNAME
+rm -r $WDIR/*
 rm -r $DIRNAME
 
 
@@ -15,7 +18,7 @@ echo [*] cloning repo...
 git clone $GITURL
 
 echo [*] moving items...
-mv ~/$DIRNAME /var/www/html/
+cp -r ~/$DIRNAME/* $WDIR
 
 
 echo [*] restarting nginx 
