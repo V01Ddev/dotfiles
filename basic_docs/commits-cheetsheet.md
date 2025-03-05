@@ -18,12 +18,14 @@ feat: add hat wobble
 ```
 
 More Examples:
-
-- `feat`: (new feature for the user, not a new feature for build script)
-- `fix`: (bug fix for the user, not a fix to a build script)
-- `docs`: (changes to the documentation)
-- `style`: (formatting, missing semi colons, etc; no production code change)
-- `refactor`: (refactoring production code, eg. renaming a variable)
-- `test`: (adding missing tests, refactoring tests; no production code change)
-- `chore`: (updating grunt tasks etc; no production code change)
-See how [a minor change](#examples) to your commit message style can make a difference. 
+- API or UI relevant changes
+    - `feat` Commits, that add or remove a new feature to the API or UI
+    - `fix` Commits, that fix a API or UI bug of a preceded `feat` commit
+- `refactor` Commits, that rewrite/restructure your code, however do not change any API or UI behaviour
+    - `perf` Commits are special `refactor` commits, that improve performance
+- `style` Commits, that do not affect the meaning (white-space, formatting, missing semi-colons, etc)
+- `test` Commits, that add missing tests or correcting existing tests
+- `docs` Commits, that affect documentation only
+- `build` Commits, that affect build components like build tool, ci pipeline, dependencies, project version, ...
+- `ops` Commits, that affect operational components like infrastructure, deployment, backup, recovery, ...
+- `chore` Miscellaneous commits e.g. modifying `.gitignore`
