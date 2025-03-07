@@ -18,6 +18,7 @@ feat: add hat wobble
 ```
 
 More Examples:
+
 - API or UI relevant changes
     - `feat` Commits, that add or remove a new feature to the API or UI
     - `fix` Commits, that fix a API or UI bug of a preceded `feat` commit
