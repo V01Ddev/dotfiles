@@ -1,0 +1,8 @@
+[user]
+	email = v01d.dev.sh@gmail.com
+	name = v01d.dev
+# Create .gitconfig-work at ~
+[includeIf "gitdir:~/Work/"]
+    path = .gitconfig-work
+[core]
+	editor = nvim
