@@ -10,6 +10,11 @@ require("mason-lspconfig").setup({
     }
 })
 
+-- Setup diagnostics
+vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = "Show diagnostics" })
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Next diagnostic" })
+
 -- Setup lspconfig
 local lspconfig = require("lspconfig")
 
