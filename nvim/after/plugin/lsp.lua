@@ -3,10 +3,35 @@ require("mason-lspconfig").setup({
     ensure_installed = {
         "pylsp",
         "clangd",
+        "bashls",
         "phpactor",
-        "eslint",
-        "ltex",
+        "html",
+        "texlab",
     }
 })
 
-require("lspconfig").clangd.setup{}
+-- Setup diagnostics
+vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { desc = "Show diagnostics" })
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Next diagnostic" })
+
+-- Setup lspconfig
+local lspconfig = require("lspconfig")
+
+-- Setup clangd
+lspconfig.clangd.setup({})
+
+-- Setup bashls
+lspconfig.bashls.setup({})
+
+-- Setup pylsp
+lspconfig.pylsp.setup({})
+
+-- Setup phpactor
+lspconfig.phpactor.setup({})
+
+-- Setup html
+lspconfig.html.setup({})
+
+-- Setup texlab
+lspconfig.texlab.setup({})
