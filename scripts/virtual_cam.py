@@ -33,7 +33,7 @@ def main():
     if os.system(cmd) != 0:
         print("Failed to reload v4l2loopback")
 
-    print("Loading module")
+    print("Creating virtual camera")
     cmd = """sudo modprobe v4l2loopback devices=1 \
 video_nr=10 card_label="VirtualCam" exclusive_caps=1"""
     if os.system(cmd) != 0:
