@@ -23,3 +23,12 @@ export MANPAGER='nvim +Man!'
 #if command -v tmux > /dev/null 2>&1; then
 #  [ -z "$TMUX" ] && exec tmux
 #fi
+
+# Tmux alias
+tmuxn() {
+    if [ -z "$1" ]; then
+        tmux new-session -d
+    else
+        tmux new-session -d -s "$1"
+    fi
+}
