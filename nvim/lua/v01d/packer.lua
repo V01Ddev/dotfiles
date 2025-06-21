@@ -11,10 +11,6 @@ return require('packer').startup(function(use)
     use 'tmsvg/pear-tree'
     use 'lervag/vimtex'
 
-    -- Status bar
-    -- use 'vim-airline/vim-airline'
-    -- use 'vim-airline/vim-airline-themes'
-
     -- Telescope
     use {
         'nvim-telescope/telescope.nvim',
@@ -46,9 +42,11 @@ return require('packer').startup(function(use)
     }
 
     -- sinppets
-    use{
+    use {
         'L3MON4D3/LuaSnip',
         'saadparwaiz1/cmp_luasnip'
     }
 
+    -- rose pine
+    use 'rose-pine/neovim'
 end)
