@@ -6,7 +6,7 @@ require("mason-lspconfig").setup({
         "bashls",
         "phpactor",
         "html",
-        "texlab",
+        "texlab"
     }
 })
 
@@ -25,7 +25,17 @@ lspconfig.clangd.setup({})
 lspconfig.bashls.setup({})
 
 -- Setup pylsp
-lspconfig.pylsp.setup({})
+lspconfig.pylsp.setup({
+    settings = {
+        pylsp = {
+            plugins = {
+                pycodestyle = {
+                    ignore = {"E501"},
+                }
+            }
+        }
+    }
+})
 
 -- Setup phpactor
 lspconfig.phpactor.setup({})
