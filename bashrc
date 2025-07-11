@@ -9,9 +9,10 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 PS1='[\u@\h \W]\$ '
 
-# Adding git session
+# Adding git session, install keychain
 eval "$(ssh-agent -s)" > /dev/null 2>&1
-ssh-add ~/.ssh/git > /dev/null 2>&1
+# eval $(keychain --quiet --eval ~/.ssh/git) > /dev/null 2>&1
+eval $(keychain --quiet --eval ~/.ssh/git ~/.ssh/work_github) > /dev/null 2>&1
 
 # Adding $HOME/bin/ to PATH
 export PATH="$HOME/bin:$PATH"
