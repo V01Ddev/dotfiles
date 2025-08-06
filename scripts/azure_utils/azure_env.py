@@ -1,4 +1,5 @@
 #!/bin/env python
+from pathlib import Path
 import argparse
 import re
 import os
@@ -23,17 +24,19 @@ def check_values(fp1, dict1, fp2, dict2):
         val1 = dict1.get(var_name)
         val2 = dict2.get(var_name)
 
+        max_len = max(len(fp1), len(fp2))
+
         if val1 != val2:
             print(f"\t{var_name} differs;")
-            print(f"\t{fp1}: {val1.strip()}")
-            print(f"\t{fp2}: {val2.strip()}")
+            print(f"\t{fp1.ljust(max_len)}: {val1.strip()}")
+            print(f"\t{fp2.ljust(max_len)}: {val2.strip()}")
             print()
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("env_one", help="first path to env")
-    parser.add_argument("env_two", help="second path to env")
+    parser.add_argument("env_one", type=Path, help="first path to env")
+    parser.add_argument("env_two", type=Path, help="second path to env")
     # parser.add_argument("-cn", "--compare-name")
     # parser.add_argument("-cv", "--compare-cv")
     args = parser.parse_args()
