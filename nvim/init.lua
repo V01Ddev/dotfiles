@@ -43,29 +43,41 @@ map('n', ']d', vim.diagnostic.goto_next, { desc = "Next diagnostic" })
 
 
 ------------------------------
--- PACKER PLUGINS
+-- PLUGINS
 ------------------------------
-vim.cmd [[packadd packer.nvim]]
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+    local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+    local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+    if vim.v.shell_error ~= 0 then
+        vim.api.nvim_echo({
+            { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+            { out, "WarningMsg" },
+            { "\nPress any key to exit..." },
+        }, true, {})
+        vim.fn.getchar()
+        os.exit(1)
+    end
+end
+vim.opt.rtp:prepend(lazypath)
 
-require('packer').startup(function(use)
-    -- Packer manages itself
-    use 'wbthomason/packer.nvim'
-
+require("lazy").setup({
     -- Auto-pair plugin.
-    use 'tmsvg/pear-tree'
+    'tmsvg/pear-tree',
 
-    -- LaTeX & Utilities
-    use {
+    -- LaTeX
+    {
         'lervag/vimtex',
         config = function()
             vim.g.vimtex_quickfix_open_on_warning = 0
             vim.g.vimtex_syntax_enabled = 0
         end
 
-    }
+    },
 
     -- Telescope
-    use {
+    {
         'nvim-telescope/telescope.nvim',
         requires = { 'nvim-lua/plenary.nvim' },
         config = function()
@@ -75,12 +87,12 @@ require('packer').startup(function(use)
             map('n', '<leader>fb', builtin.buffers)
             map('n', '<leader>fh', builtin.help_tags)
         end
-    }
+    },
 
     -- Treesitter
-    use {
+    {
         'nvim-treesitter/nvim-treesitter',
-        run = function()
+        build = function()
             local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
             ts_update()
         end,
@@ -92,32 +104,32 @@ require('packer').startup(function(use)
                 indent = { enable = true },
             }
         end
-    }
+    },
 
     -- LSP
-    use {
-        'williamboman/mason.nvim',
-        'williamboman/mason-lspconfig.nvim',
-        'neovim/nvim-lspconfig'
-    }
+    {
+        "mason-org/mason-lspconfig.nvim",
+        opts = {},
+        dependencies = {
+            { "mason-org/mason.nvim", opts = {} },
+            "neovim/nvim-lspconfig",
+        },
+    },
+    'neovim/nvim-lspconfig',
 
     -- Completion
-    use {
-        'hrsh7th/nvim-cmp',
-        'hrsh7th/cmp-nvim-lsp',
-        'hrsh7th/cmp-buffer',
-        'hrsh7th/cmp-path'
-    }
+    'hrsh7th/nvim-cmp',
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-path',
 
     -- Snippets
-    use {
-        'L3MON4D3/LuaSnip',
-        'saadparwaiz1/cmp_luasnip'
-    }
+    'L3MON4D3/LuaSnip',
+    'saadparwaiz1/cmp_luasnip',
 
     -- Theme
-    use 'rose-pine/neovim'
-end)
+    'rose-pine/neovim'
+})
 
 
 ------------------------------
@@ -131,24 +143,21 @@ vim.cmd('colorscheme rose-pine')
 ------------------------------
 require("mason").setup()
 require("mason-lspconfig").setup({
-    automatic_enable = false,
-    ensure_installed = { "pylsp", "clangd", "bashls", "phpactor", "html", "texlab" }
+    ensure_installed = { "pylsp", "clangd", "bashls", "phpactor", "html", "texlab", "svelte" }
 })
 
 local lspconfig = require("lspconfig")
 
--- Servers
+-- Server setups
 lspconfig.clangd.setup({})
 lspconfig.bashls.setup({})
 lspconfig.pylsp.setup({
-    settings = {
-        pylsp = { plugins = { pycodestyle = { ignore = {"E501"} } } }
-    }
+    settings = { pylsp = { plugins = { pycodestyle = { ignore = { "E501" } } } } }
 })
 lspconfig.phpactor.setup({})
 lspconfig.html.setup({})
 lspconfig.texlab.setup({})
-
+lspconfig.svelte.setup({})
 
 ------------------------------
 -- COMPLETION CONFIG
