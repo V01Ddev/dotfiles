@@ -149,11 +149,25 @@ require("mason-lspconfig").setup({
 local lspconfig = require("lspconfig")
 
 -- Server setups
+
+lspconfig.pylsp.setup {
+  settings = {
+    pylsp = {
+      plugins = {
+        pycodestyle = {
+          enabled = true,
+          ignore = { "E501" },
+          maxLineLength = 120,
+        },
+        mccabe = { enabled = false },
+        pyflakes = { enabled = false },
+      }
+    }
+  }
+}
+
 lspconfig.clangd.setup({})
 lspconfig.bashls.setup({})
-lspconfig.pylsp.setup({
-    settings = { pylsp = { plugins = { pycodestyle = { ignore = { "E501" } } } } }
-})
 lspconfig.phpactor.setup({})
 lspconfig.html.setup({})
 lspconfig.texlab.setup({})
