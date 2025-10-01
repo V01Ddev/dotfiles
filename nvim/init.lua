@@ -139,18 +139,21 @@ vim.cmd('colorscheme rose-pine')
 
 
 ------------------------------
--- LSP CONFIG
+-- LSP CONFIG (Neovim ≥ 0.11)
 ------------------------------
 require("mason").setup()
+
 require("mason-lspconfig").setup({
-    ensure_installed = { "pylsp", "clangd", "bashls", "phpactor", "html", "texlab", "svelte" }
+  ensure_installed = { "pylsp", "clangd", "bashls", "phpactor", "html", "texlab", "svelte" },
 })
 
-local lspconfig = require("lspconfig")
+-- Default config for all servers
+vim.lsp.config("*", {
+  capabilities = vim.lsp.protocol.make_client_capabilities(),
+})
 
--- Server setups
-
-lspconfig.pylsp.setup {
+-- Custom config for pylsp
+vim.lsp.config.pylsp = {
   settings = {
     pylsp = {
       plugins = {
@@ -161,17 +164,14 @@ lspconfig.pylsp.setup {
         },
         mccabe = { enabled = false },
         pyflakes = { enabled = false },
-      }
-    }
-  }
+      },
+    },
+  },
 }
 
-lspconfig.clangd.setup({})
-lspconfig.bashls.setup({})
-lspconfig.phpactor.setup({})
-lspconfig.html.setup({})
-lspconfig.texlab.setup({})
-lspconfig.svelte.setup({})
+-- Enable all installed servers
+vim.lsp.enable({ "pylsp", "clangd", "bashls", "phpactor", "html", "texlab", "svelte" })
+
 
 ------------------------------
 -- COMPLETION CONFIG
@@ -180,18 +180,20 @@ local cmp = require("cmp")
 require("luasnip.loaders.from_vscode").lazy_load()
 
 cmp.setup({
-    mapping = cmp.mapping.preset.insert({
-        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-o>'] = cmp.mapping.complete(),
-        ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    }),
-    snippet = { expand = function(args) require('luasnip').lsp_expand(args.body) end },
-    sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-    }, {
-            { name = 'buffer' },
-        }),
+  mapping = cmp.mapping.preset.insert({
+    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-o>"] = cmp.mapping.complete(),
+    ["<C-e>"] = cmp.mapping.abort(),
+    ["<C-CR>"]  = cmp.mapping.confirm({ select = true }),
+  }),
+  snippet = {
+    expand = function(args) require("luasnip").lsp_expand(args.body) end,
+  },
+  sources = cmp.config.sources({
+    { name = "nvim_lsp" },
+    { name = "luasnip" },
+  }, {
+    { name = "buffer" },
+  }),
 })
