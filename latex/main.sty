@@ -1,0 +1,52 @@
+\usepackage{geometry}
+\usepackage{import}
+% \usepackage{charter}
+\usepackage{amsmath, amssymb, mathtools}
+\usepackage{array} % Extend functionality of array and tabular
+\usepackage{ragged2e} % Text alignment
+\usepackage{xcolor}
+\usepackage[parfill]{parskip} % Blank line means new paragraph with noindent by default
+\usepackage[none]{hyphenat} % Gets rid of hyphenated words at end of lines
+\usepackage{physics} % For physics macros, needed for some tikz diagram
+
+% Inkscape figures command
+\newcommand{\incfig}[2][1]{%
+	\def\svgwidth{#1\columnwidth}
+	\import{./assets/}{#2.pdf_tex}
+}
+
+% tikz
+\usepackage{tikz, pgfplots}
+\pgfplotsset{compat=1.15} % setting pgfplots version
+\usetikzlibrary{shapes, graphs, calc}
+
+% Define new tikz object
+\tikzset{%
+	fillnode/.style={%
+circle, draw=black, fill=black } }
+
+% Custom Titles
+\usepackage{titlesec} 
+\titleformat{\chapter}[display]
+{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}   
+\titlespacing*{\chapter}{0pt}{-60pt}{40pt}
+
+% Sets custom columns
+\usepackage{multirow, makecell} % Table features
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+% Setting up hyperlink colours
+\usepackage{bookmark} % Hyperlinks
+\hypersetup{ pdfborder=0 0 0, colorlinks=false, linkcolor=black,
+	filecolor=black,      
+urlcolor=black,}
+
+% Custom chapters
+\usepackage{chngcntr} % Used to reset chapter counter
+\counterwithin*{chapter}{part} % Resets chapter to 1 on each part
+
+% Hopefully sorts out some hbox
+\AtBeginDocument{\raggedright}
+
