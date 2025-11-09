@@ -144,7 +144,15 @@ vim.cmd('colorscheme rose-pine')
 require("mason").setup()
 
 require("mason-lspconfig").setup({
-  ensure_installed = { "pylsp", "clangd", "bashls", "phpactor", "html", "texlab", "svelte" },
+  ensure_installed = {
+        "pylsp",
+        "clangd",
+        "bashls",
+        "gopls",
+        "phpactor",
+        "html",
+        "texlab",
+    },
 })
 
 -- Default config for all servers
