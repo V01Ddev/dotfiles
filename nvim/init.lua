@@ -178,7 +178,16 @@ vim.lsp.config.pylsp = {
 }
 
 -- Enable all installed servers
-vim.lsp.enable({ "pylsp", "clangd", "bashls", "phpactor", "html", "texlab", "svelte" })
+vim.lsp.enable({ 
+    "pylsp",
+    "gopls",
+    "clangd",
+    "bashls",
+    "phpactor",
+    "html",
+    "texlab",
+    "svelte"
+})
 
 
 ------------------------------
@@ -193,7 +202,7 @@ cmp.setup({
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-o>"] = cmp.mapping.complete(),
     ["<C-e>"] = cmp.mapping.abort(),
-    ["<C-CR>"]  = cmp.mapping.confirm({ select = true }),
+    ["<CR>"]  = cmp.mapping.confirm({ select = true }),
   }),
   snippet = {
     expand = function(args) require("luasnip").lsp_expand(args.body) end,
