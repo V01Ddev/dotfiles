@@ -1,10 +1,4 @@
-Host github-prsn
-  HostName github.com
-  User git
-  IdentityFile {path/to/private_key}
-  IdentitiesOnly yes
-
-Host github-work
+Host github.com
   HostName github.com
   User git
   IdentityFile {path/to/private_key}
@@ -12,6 +6,12 @@ Host github-work
 
 Host devops
   HostName ssh.dev.azure.com
+  User git
+  IdentityFile {path/to/private_key}
+  IdentitiesOnly yes
+
+Host aj
+  HostName github.com
   User git
   IdentityFile {path/to/private_key}
   IdentitiesOnly yes
