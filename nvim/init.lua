@@ -12,6 +12,7 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 
 -- vim.opt.spell = true
+vim.opt.spelllang = 'en_us'
 
 
 ------------------------------
@@ -136,6 +137,19 @@ require("lazy").setup({
 -- THEME
 ------------------------------
 vim.cmd('colorscheme rose-pine')
+
+-- ensure spell underlining is working under tmux
+vim.api.nvim_create_autocmd("ColorScheme", {
+  callback = function()
+    local style = { underline = true }
+    vim.api.nvim_set_hl(0, "SpellBad",   style)
+    vim.api.nvim_set_hl(0, "SpellCap",   style)
+    vim.api.nvim_set_hl(0, "SpellRare",  style)
+    vim.api.nvim_set_hl(0, "SpellLocal", style)
+  end,
+})
+
+vim.cmd("doautocmd ColorScheme")
 
 
 ------------------------------
