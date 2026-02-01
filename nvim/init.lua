@@ -17,6 +17,7 @@ vim.opt.spelllang = "en_us"
 vim.g.mapleader = "\\"
 vim.g.maplocalleader = "\\"
 
+
 ------------------------------
 -- KEYMAPS
 ------------------------------
@@ -46,6 +47,7 @@ map("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
 
 -- Code action
 map({ "n", "v" }, "<leader>df", vim.lsp.buf.code_action, { desc = "LSP code action" })
+
 
 ------------------------------
 -- PLUGINS
@@ -150,6 +152,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 })
 vim.cmd("doautocmd ColorScheme")
 
+
 ------------------------------
 -- LSP CONFIG (0.11+ preferred, 0.10 fallback)
 ------------------------------
@@ -213,6 +216,7 @@ else
     lspconfig[server].setup(cfg)
   end
 end
+
 
 ------------------------------
 -- COMPLETION CONFIG
