@@ -20,6 +20,15 @@ vim.cmd("filetype plugin indent on")
 
 vim.opt.spelllang = "en_us"
 
+-- Folding (Tree-sitter)
+-- Uses Tree-sitter fold expressions for structured folds.
+-- Tip: keep folds open by default with foldlevel.
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+
+
 ------------------------------
 -- KEYMAPS
 ------------------------------
@@ -106,6 +115,40 @@ require("lazy").setup({
     "L3MON4D3/LuaSnip",
     "saadparwaiz1/cmp_luasnip",
     "rafamadriz/friendly-snippets",
+
+    -- Treesitter (main branch rewrite; requires Neovim 0.11+)
+    {
+        "nvim-treesitter/nvim-treesitter",
+        branch = "main",
+        lazy = false, -- required by nvim-treesitter (main)
+        build = ":TSUpdate",
+        config = function()
+            -- Directory to install parsers/queries to (prepended to runtimepath)
+            require("nvim-treesitter").setup({
+                install_dir = vim.fn.stdpath("data") .. "/site",
+            })
+
+            -- Install a baseline set of parsers (no-op if already installed)
+            if vim.fn.has("nvim-0.11") == 1 then
+                require("nvim-treesitter").install({
+                    "python",
+                    "bash",
+                    "go",
+                    "c",
+                    "cpp",
+                    "php",
+                    "lua",
+                    "latex",
+                    "vim",
+                    "vimdoc",
+                    "markdown",
+                    "markdown_inline",
+                    "json",
+                    "yaml",
+                })
+            end
+        end,
+    },
 })
 
 ------------------------------
