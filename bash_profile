@@ -15,5 +15,5 @@ export MANPAGER='nvim +Man!'
 
 # SSH Key Management 
 if command -v keychain > /dev/null 2>&1; then
-    eval $(keychain --quiet --eval ~/.ssh/git ~/.ssh/work_github)
+    eval "$(keychain add --eval --quiet --immediate ~/.ssh/git ~/.ssh/work_github)"
 fi
