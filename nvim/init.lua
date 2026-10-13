@@ -75,7 +75,13 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-    "tmsvg/pear-tree",
+    {
+        "tmsvg/pear-tree",
+        config = function()
+            -- Pear Tree's <CR> would shadow Telescope's select in the prompt
+            vim.g.pear_tree_ft_disabled = { "TelescopePrompt" }
+        end,
+    },
 
     { "rose-pine/neovim", name = "rose-pine" },
 
@@ -92,10 +98,28 @@ require("lazy").setup({
         dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
             local builtin = require("telescope.builtin")
+
             map("n", "<leader>ff", builtin.find_files)
             map("n", "<leader>fg", builtin.live_grep)
             map("n", "<leader>fb", builtin.buffers)
             map("n", "<leader>fh", builtin.help_tags)
+
+            -- `nvim .` opens the finder rooted there instead of a netrw listing.
+            -- vim.schedule is load-bearing: without it, focus lands in the
+            -- results window instead of the prompt and typing goes nowhere.
+            vim.api.nvim_create_autocmd("VimEnter", {
+                desc = "Open Telescope find_files when started on a directory",
+                callback = function()
+                    if vim.bo.buftype ~= "" then return end          -- terminal, help, quickfix
+                    if #vim.api.nvim_list_uis() == 0 then return end -- headless
+                    if vim.fn.argc() ~= 1 then return end            -- no argument, or several
+                    if vim.fn.isdirectory(vim.fn.argv(0)) == 0 then return end -- a real file (or `-`)
+
+                    local dir = vim.fn.fnamemodify(vim.fn.argv(0), ":p")
+                    vim.cmd("bwipeout!") -- drop the netrw listing underneath
+                    vim.schedule(function() builtin.find_files({ cwd = dir }) end)
+                end,
+            })
         end,
     },
 
