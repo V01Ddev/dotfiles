@@ -1,0 +1,17 @@
+# ~/.inputrc — readline behavior for bash Tab completion
+
+# Case-insensitive completion (git<TAB> matches Git)
+set completion-ignore-case on
+
+# One Tab lists all matches instead of beeping and waiting for a second press
+set show-all-if-ambiguous on
+
+# Color the completion list and the common prefix by file type
+set colored-stats on
+set colored-completion-prefix on
+
+# Don't re-insert text already present when completing in the middle of a word
+set skip-completed-text on
+
+# Hidden files complete only after typing the leading dot
+set match-hidden-files on
