@@ -4,7 +4,8 @@ config files into $HOME.
 
 Nothing is installed and no config is copied: existing files are moved to
 <name>.bak.<timestamp> before the symlink is created, and the script is safe
-to re-run.
+to re-run. Use --dry-run to preview, and --clean-backups to remove the
+timestamped backups.
 
 ~/.ssh/config and ~/.gitconfig-work are intentionally not linked. They hold
 machine-specific values (key paths, work identity) and this repo is public,
@@ -13,7 +14,9 @@ so copy their templates by hand and edit the local copies.
 
 from __future__ import annotations
 
+import argparse
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -97,44 +100,116 @@ def print_packages() -> None:
         print("  Hack font, Noto Naskh Arabic, konsole, and a C compiler")
 
 
-def backup(path: Path) -> None:
+def backup(dest: Path, dry_run: bool) -> None:
     """Move an existing regular file out of the way (not a symlink)."""
-    if path.is_symlink() or not path.exists():
+    if dest.is_symlink() or not dest.exists():
         return
-    stamp = datetime.now().strftime("%Y%m%d%H%M%S")
-    target = path.with_name(f"{path.name}.bak.{stamp}")
-    print(f"  backup {path} -> {target}")
-    path.rename(target)
+
+    target = dest.with_name(f"{dest.name}.bak.{datetime.now():%Y%m%d%H%M%S}")
+    if dry_run:
+        print(f"  would backup {dest} -> {target}")
+        return
+
+    print(f"  backup {dest} -> {target}")
+    dest.rename(target)
 
 
-def link(dest_rel: str, src_rel: str) -> None:
+def link(dest_rel: str, src_rel: str, dry_run: bool) -> None:
     dest = HOME / dest_rel
     src = DOTFILES / src_rel
 
     if not src.exists():
         sys.exit(f"Missing source: {src}")
 
+    if dry_run:
+        if not dest.parent.is_dir():
+            print(f"  would create {dest.parent}")
+        backup(dest, dry_run=True)
+        print(f"  would link {dest} -> {src}")
+        return
+
     dest.parent.mkdir(parents=True, exist_ok=True)
-    backup(dest)
+    backup(dest, dry_run=False)
     dest.unlink(missing_ok=True)
     dest.symlink_to(src)
     print(f"  {dest} -> {src}")
 
 
+def backups_of(dest: Path) -> list[Path]:
+    """Return the <name>.bak.<14-digit timestamp> siblings of dest."""
+    if not dest.parent.is_dir():
+        return []
+
+    pattern = re.compile(rf"^{re.escape(dest.name)}\.bak\.\d{{14}}$")
+    return sorted(p for p in dest.parent.iterdir() if pattern.match(p.name))
+
+
+def clean_backups(dry_run: bool) -> None:
+    removed = 0
+    for dest_rel, _ in LINKS:
+        for path in backups_of(HOME / dest_rel):
+            if dry_run:
+                print(f"  would delete {path}")
+            else:
+                print(f"  delete {path}")
+                path.unlink()
+            removed += 1
+
+    if not removed:
+        print("  no backups found")
+    elif dry_run:
+        print(f"\n{removed} backup(s) would be deleted.")
+    else:
+        print(f"\n{removed} backup(s) deleted.")
+
+
+def chmod_ssh(dry_run: bool) -> None:
+    ssh_dir = HOME / ".ssh"
+    ssh_config = ssh_dir / "config"
+
+    if ssh_dir.is_dir() and (ssh_dir.stat().st_mode & 0o777) != 0o700:
+        if dry_run:
+            print(f"  would chmod 700 {ssh_dir}")
+        else:
+            os.chmod(ssh_dir, 0o700)
+
+    if ssh_config.exists() and (ssh_config.stat().st_mode & 0o777) != 0o600:
+        if dry_run:
+            print(f"  would chmod 600 {ssh_config}")
+        else:
+            os.chmod(ssh_config, 0o600)
+
+
 def main() -> None:
+    parser = argparse.ArgumentParser(
+        description="Report missing packages and symlink this repo's configs into $HOME."
+    )
+    parser.add_argument(
+        "-n", "--dry-run", action="store_true",
+        help="show what would change without touching anything",
+    )
+    parser.add_argument(
+        "-c", "--clean-backups", action="store_true",
+        help="delete <name>.bak.<timestamp> files and exit",
+    )
+    args = parser.parse_args()
+
+    if args.dry_run:
+        print("Dry run: nothing will be changed.\n")
+
+    if args.clean_backups:
+        print("== Backups ==")
+        clean_backups(args.dry_run)
+        return
+
     print("== Packages ==")
     print_packages()
 
     print("\n== Symlinks ==")
     for dest, src in LINKS:
-        link(dest, src)
+        link(dest, src, args.dry_run)
 
-    ssh_dir = HOME / ".ssh"
-    ssh_config = ssh_dir / "config"
-    if ssh_dir.is_dir():
-        os.chmod(ssh_dir, 0o700)
-    if ssh_config.exists():
-        os.chmod(ssh_config, 0o600)
+    chmod_ssh(args.dry_run)
 
     print("\nLeft as local files (not linked): ~/.ssh/config, ~/.gitconfig-work")
     print("Copy the repo templates on a new machine, then fill in the values.")

@@ -52,6 +52,17 @@ It does two things:
 2. Symlinks the config files from the map into place. Existing files are moved
    to `<name>.bak.<timestamp>` first, and the script is safe to re-run.
 
+Flags:
+
+```bash
+./deploy.py --dry-run          # show the actions without changing anything
+./deploy.py --clean-backups    # delete the .bak.<timestamp> files
+```
+
+`--dry-run` also works with `--clean-backups`. Cleanup only matches backups of
+the linked destinations (`<name>.bak.<14-digit timestamp>`); other `.bak`
+files are left alone.
+
 It does not touch `~/.ssh/config` or `~/.gitconfig-work`; copy and edit those
 by hand as described in
 [the machine-specific steps](#4-fill-in-the-machine-specific-parts). The
