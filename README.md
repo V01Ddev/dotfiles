@@ -10,7 +10,7 @@ are copied because Konsole rewrites them from its UI, and `~/.ssh/config` and
 `~/.gitconfig-work` stay local because they hold machine-specific values and
 this repo is public.
 
-The deploy script handles Arch Linux and Debian/Ubuntu.
+The deploy script needs Python 3 and handles Arch Linux and Debian/Ubuntu.
 
 ## Deployment map
 
@@ -34,7 +34,7 @@ git clone https://github.com/V01Ddev/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ```
 
-Any path works; `deploy.sh` resolves the repo from its own location. The manual
+Any path works; `deploy.py` resolves the repo from its own location. The manual
 `cp` examples below assume `~/dotfiles`.
 
 
@@ -42,7 +42,7 @@ Any path works; `deploy.sh` resolves the repo from its own location. The manual
 
 
 ```bash
-./deploy.sh
+./deploy.py
 ```
 
 It does two things:
