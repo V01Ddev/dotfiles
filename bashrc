@@ -31,12 +31,15 @@ fi
 # Colors are ANSI indices 0-15, so they follow the terminal palette.
 if command -v fzf >/dev/null 2>&1; then
     source <(fzf --bash)
+    # Ctrl-T, Alt-C and ** completion all inherit FZF_DEFAULT_OPTS, so the
+    # walker skip list lives here once. Skipping caches/tool data keeps the
+    # walker out of every cache under $HOME (~/.local alone is ~380k files).
     export FZF_DEFAULT_OPTS='--color=fg:7,bg:-1,hl:5,fg+:15,bg+:8,hl+:5,prompt:5,pointer:1,marker:1,info:2'
+    export FZF_DEFAULT_OPTS+=' --walker-skip=.git,node_modules,.cache,.local,.cargo,.npm,.mozilla,.rustup,.steam'
+    export FZF_DEFAULT_OPTS+=',.gradle,.m2,.venv,venv,.var,__pycache__,.fgfs,.arduino15,.pub-cache,.pyenv'
+    export FZF_DEFAULT_OPTS+=',.wine,.wine-pyinstaller-32,.minecraft,.zoom,.codex,.claude,.BurpSuite'
+    export FZF_DEFAULT_OPTS+=',.copilot,.docker,.gnupg,.thunderbird,.vscode,.vscode-oss'
 
-    # Ctrl-T recurses from $PWD. Skip caches/tool data so it doesn't walk every
-    # cache under $HOME, and keep the picker compact in short tmux panes.
-    export FZF_CTRL_T_OPTS='--walker-skip=.git,node_modules,.cache,.local,.cargo,.npm,.mozilla,.rustup,.steam'
-    export FZF_CTRL_T_OPTS+=',.gradle,.m2,.venv,venv,.var,__pycache__,.fgfs,.arduino15,.pub-cache,.pyenv'
-    export FZF_CTRL_T_OPTS+=',.wine,.wine-pyinstaller-32,.minecraft,.zoom,.codex,.claude,.BurpSuite'
-    export FZF_CTRL_T_OPTS+=',.copilot,.docker,.gnupg,.thunderbird,.vscode,.vscode-oss --min-height=10'
+    # Keep the Ctrl-T picker compact in short tmux panes.
+    export FZF_CTRL_T_OPTS='--min-height=10'
 fi
