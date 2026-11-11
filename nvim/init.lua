@@ -163,6 +163,7 @@ require("lazy").setup({
                     "php",
                     "lua",
                     "latex",
+                    "typst",
                     "vim",
                     "vimdoc",
                     "markdown",
@@ -173,6 +174,14 @@ require("lazy").setup({
             end
         end,
     },
+})
+
+-- Typst: use Tree-sitter highlighting when the parser is available
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "typst",
+    callback = function()
+        pcall(vim.treesitter.start)
+    end,
 })
 
 ------------------------------
@@ -197,7 +206,7 @@ vim.cmd("doautocmd ColorScheme")
 require("mason").setup()
 
 require("mason-lspconfig").setup({
-    ensure_installed = { "pylsp", "clangd", "bashls", "gopls", "phpactor", "html", "texlab", "svelte" },
+    ensure_installed = { "pylsp", "clangd", "bashls", "gopls", "phpactor", "html", "texlab", "svelte", "tinymist" },
 })
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -218,17 +227,23 @@ local pylsp_settings = {
     },
 }
 
-local servers = { "pylsp", "gopls", "clangd", "bashls", "phpactor", "html", "texlab", "svelte" }
+local tinymist_settings = {
+    tinymist = { exportPdf = "onSave" },
+}
+
+local servers = { "pylsp", "gopls", "clangd", "bashls", "phpactor", "html", "texlab", "svelte", "tinymist" }
 
 if vim.fn.has("nvim-0.11") == 1 then
     vim.lsp.config("*", { capabilities = capabilities })
     vim.lsp.config.pylsp = { settings = pylsp_settings }
+    vim.lsp.config.tinymist = { settings = tinymist_settings }
     vim.lsp.enable(servers)
 else
     local lspconfig = require("lspconfig")
     for _, server in ipairs(servers) do
         local cfg = { capabilities = capabilities }
         if server == "pylsp" then cfg.settings = pylsp_settings end
+        if server == "tinymist" then cfg.settings = tinymist_settings end
         lspconfig[server].setup(cfg)
     end
 end
