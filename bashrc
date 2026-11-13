@@ -43,3 +43,6 @@ if command -v fzf >/dev/null 2>&1; then
     # Keep the Ctrl-T picker compact in short tmux panes.
     export FZF_CTRL_T_OPTS='--min-height=10'
 fi
+
+# opencode
+export PATH=/home/v01d/.opencode/bin:$PATH
